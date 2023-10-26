@@ -12,17 +12,11 @@ export const mayorizacion = sequelize.define(
     daily_book_id_fk: {
       type: DataTypes.STRING,
     },
-    cuenta_id: {
+    codigo_chartAccount: {
       type: DataTypes.STRING,
     },
     referencia: {
       type: DataTypes.STRING,
-    },
-    debito: {
-      type: DataTypes.DECIMAL,
-    },
-    credito: {
-      type: DataTypes.DECIMAL,
     },
     deudor: {
       type: DataTypes.DECIMAL,

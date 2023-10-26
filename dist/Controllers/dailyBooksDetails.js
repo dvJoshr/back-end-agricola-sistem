@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBooksDetailsByBookAndAccount = exports.getCountsBooks = exports.saveBooksDetails = exports.getDailyBookDetailsById = exports.getDailyBooksDetails = void 0;
+exports.updateDetails = exports.getBooksDetailsByBookAndAccount = exports.getCountsBooks = exports.saveBooksDetails = exports.getDailyBookDetailsById = exports.getDailyBooksDetails = void 0;
 const sequelize_1 = require("sequelize");
 const dailyBookDetalleModel_1 = require("../Models/dailyBookDetalleModel");
 const getDailyBooksDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -58,11 +58,13 @@ const getCountsBooks = (req, res) => __awaiter(void 0, void 0, void 0, function*
                     sequelize_1.Sequelize.fn("DISTINCT", sequelize_1.Sequelize.col("codigo_chartaccount")),
                     "codigo_chartaccount",
                 ],
+                "estado",
             ],
             where: {
                 daily_book_id_fk: id_libro,
             },
         });
+        console.log(cuentas);
         res.json(cuentas);
     }
     catch (error) {
@@ -95,4 +97,31 @@ const getBooksDetailsByBookAndAccount = (req, res) => __awaiter(void 0, void 0, 
     }
 });
 exports.getBooksDetailsByBookAndAccount = getBooksDetailsByBookAndAccount;
+const updateDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let parametros = {
+            id: req.params.id,
+            cuenta: req.params.cuenta,
+            estado: req.params.estado,
+        };
+        const response = yield dailyBookDetalleModel_1.dailyBooksDetails.update({ estado: false }, {
+            where: {
+                [sequelize_1.Op.and]: [
+                    {
+                        daily_book_id_fk: parametros.id,
+                    },
+                    {
+                        codigo_chartaccount: parametros.cuenta,
+                    },
+                    { estado: req.params.estado },
+                ],
+            },
+        });
+        res.status(200).json(response);
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.updateDetails = updateDetails;
 //# sourceMappingURL=dailyBooksDetails.js.map

@@ -12,17 +12,11 @@ exports.mayorizacion = database_1.sequelize.define("mayorizaciones", {
     daily_book_id_fk: {
         type: sequelize_1.DataTypes.STRING,
     },
-    cuenta_id: {
+    codigo_chartAccount: {
         type: sequelize_1.DataTypes.STRING,
     },
     referencia: {
         type: sequelize_1.DataTypes.STRING,
-    },
-    debito: {
-        type: sequelize_1.DataTypes.DECIMAL,
-    },
-    credito: {
-        type: sequelize_1.DataTypes.DECIMAL,
     },
     deudor: {
         type: sequelize_1.DataTypes.DECIMAL,

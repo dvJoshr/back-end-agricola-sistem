@@ -27,7 +27,12 @@ exports.dailyBooksDetails = database_1.sequelize.define("dailybookdetails", {
         primaryKey: true,
         autoIncrement: true,
     },
-    fecha: { type: sequelize_1.DataTypes.DATE },
+    fecha: {
+        type: sequelize_1.DataTypes.DATE,
+    },
+    estado: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+    },
 }, {
     timestamps: false,
 });

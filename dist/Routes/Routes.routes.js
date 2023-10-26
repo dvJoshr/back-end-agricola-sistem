@@ -7,9 +7,11 @@ const express_1 = require("express");
 const chartAccounts_routes_1 = __importDefault(require("./chartAccounts.routes"));
 const dailyBook_routes_1 = __importDefault(require("./dailyBook.routes"));
 const dailyBookDetails_routes_1 = __importDefault(require("./dailyBookDetails.routes"));
+const mayorizacion_routes_1 = __importDefault(require("./mayorizacion.routes"));
 const router = (0, express_1.Router)();
 router.use("/api", dailyBook_routes_1.default);
 router.use("/api", chartAccounts_routes_1.default);
 router.use("/api", dailyBookDetails_routes_1.default);
+router.use("/api", mayorizacion_routes_1.default);
 exports.default = router;
 //# sourceMappingURL=Routes.routes.js.map

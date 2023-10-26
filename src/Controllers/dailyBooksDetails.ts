@@ -45,11 +45,13 @@ export const getCountsBooks = async (req: Request, res: Response) => {
           Sequelize.fn("DISTINCT", Sequelize.col("codigo_chartaccount")),
           "codigo_chartaccount",
         ],
+        "estado",
       ],
       where: {
         daily_book_id_fk: id_libro,
       },
     });
+    console.log(cuentas);
     res.json(cuentas);
   } catch (error) {
     res.json(error);
@@ -80,5 +82,34 @@ export const getBooksDetailsByBookAndAccount = async (
     res.status(200).json(response);
   } catch (error) {
     res.json(error);
+  }
+};
+
+export const updateDetails = async (req: Request, res: Response) => {
+  try {
+    let parametros = {
+      id: req.params.id,
+      cuenta: req.params.cuenta,
+      estado: req.params.estado,
+    };
+    const response = await dailyBooksDetails.update(
+      { estado: false },
+      {
+        where: {
+          [Op.and]: [
+            {
+              daily_book_id_fk: parametros.id,
+            },
+            {
+              codigo_chartaccount: parametros.cuenta,
+            },
+            { estado: req.params.estado },
+          ],
+        },
+      }
+    );
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };

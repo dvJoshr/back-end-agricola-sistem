@@ -6,5 +6,11 @@ exports.sequelize = new sequelize_1.Sequelize("database", "fl0user", "bmjzPGDlvB
     host: "ep-crimson-water-05782028.us-east-2.aws.neon.fl0.io",
     dialect: "postgres",
     port: 5432,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
 });
 //# sourceMappingURL=database.js.map

@@ -10,7 +10,11 @@ const Routes_routes_1 = __importDefault(require("./Routes/Routes.routes"));
 const app = (0, express_1.default)();
 //settings
 app.set("port", 3000);
-const allowedOrigins = ["http://localhost:8080", "http://localhost:8081"];
+const allowedOrigins = [
+    "http://localhost:8080",
+    "http://localhost:8081",
+    "https://master--idyllic-speculoos-4c3f40.netlify.app/",
+];
 const options = {
     origin: allowedOrigins,
 };

@@ -7,7 +7,11 @@ const app: Express = express();
 //settings
 app.set("port", 3000);
 
-const allowedOrigins = ["http://localhost:8080", "http://localhost:8081"];
+const allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:8081",
+  "https://master--idyllic-speculoos-4c3f40.netlify.app/",
+];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,

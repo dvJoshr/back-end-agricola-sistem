@@ -11,6 +11,7 @@ const allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:8081",
   "https://idyllic-speculoos-4c3f40.netlify.app",
+  ""
 ];
 
 const options: cors.CorsOptions = {

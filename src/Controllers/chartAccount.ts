@@ -27,3 +27,17 @@ export const saveChartAccount = async (req: Request, res: Response) => {
     return res.status(500).json(error);
   }
 };
+
+export const getAccountById = async (req: Request, res: Response) => {
+  let id = req.params.id;
+  try {
+    const response = await account.findOne({
+      where: {
+        codigo: id,
+      },
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

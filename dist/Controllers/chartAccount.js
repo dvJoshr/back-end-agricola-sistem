@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveChartAccount = exports.getChartAccount = void 0;
+exports.getAccountById = exports.saveChartAccount = exports.getChartAccount = void 0;
 const chartAccountModel_1 = require("../Models/chartAccountModel");
 const getChartAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -38,4 +38,19 @@ const saveChartAccount = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.saveChartAccount = saveChartAccount;
+const getAccountById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = req.params.id;
+    try {
+        const response = yield chartAccountModel_1.account.findOne({
+            where: {
+                codigo: id,
+            },
+        });
+        res.status(200).json(response);
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.getAccountById = getAccountById;
 //# sourceMappingURL=chartAccount.js.map

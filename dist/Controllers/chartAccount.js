@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAccountById = exports.saveChartAccount = exports.getChartAccount = void 0;
+exports.deleteCuenta = exports.updateAccount = exports.getAccountById = exports.saveChartAccount = exports.getChartAccount = void 0;
 const chartAccountModel_1 = require("../Models/chartAccountModel");
 const getChartAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -30,6 +30,7 @@ const saveChartAccount = (req, res) => __awaiter(void 0, void 0, void 0, functio
             codigo: codigo,
             titulo: titulo,
             detalle: detalle,
+            estado: "ACTIVO",
         });
         res.json(accountResult);
     }
@@ -53,4 +54,41 @@ const getAccountById = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getAccountById = getAccountById;
+const updateAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { codigo_antiguo, codigo_nuevo, titulo, detalle } = req.body;
+    try {
+        const accountResult = yield chartAccountModel_1.account.update({
+            codigo: codigo_nuevo,
+            titulo: titulo,
+            detalle: detalle,
+        }, {
+            where: {
+                codigo: codigo_antiguo,
+            },
+        });
+        res.json(accountResult);
+    }
+    catch (error) {
+        return res.status(500).json(error);
+    }
+});
+exports.updateAccount = updateAccount;
+const deleteCuenta = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let codigo = req.params.id;
+    try {
+        const response = yield chartAccountModel_1.account.update({
+            codigo: `${codigo}_Borrado`,
+            estado: "BORRADO",
+        }, {
+            where: {
+                codigo: codigo,
+            },
+        });
+        res.status(200).json(response);
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.deleteCuenta = deleteCuenta;
 //# sourceMappingURL=chartAccount.js.map

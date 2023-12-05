@@ -14,10 +14,13 @@ export const account = sequelize.define(
     detalle: {
       type: DataTypes.STRING,
     },
+    estado: {
+      type: DataTypes.STRING,
+    },
   },
   {
     timestamps: false,
-  }
+  },
 );
 
 account.hasMany(dailyBooksDetails, {

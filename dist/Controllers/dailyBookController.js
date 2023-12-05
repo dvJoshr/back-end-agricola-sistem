@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveDialyBook = exports.getDialyBook = void 0;
+exports.deleteBook = exports.updateBook = exports.saveDialyBook = exports.getDialyBook = void 0;
 const dailyBookModel_1 = require("../Models/dailyBookModel");
 const getDialyBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -37,4 +37,42 @@ const saveDialyBook = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.saveDialyBook = saveDialyBook;
+const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { daily_book_id, fecha, titulo, tema } = req.body;
+    try {
+        const bookResult = yield dailyBookModel_1.dailyBook.update({
+            fecha: fecha,
+            titulo: titulo,
+            tema: tema,
+        }, {
+            where: {
+                daily_book_id: daily_book_id,
+            },
+        });
+        console.log(bookResult);
+        res.status(200).json(bookResult);
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.updateBook = updateBook;
+const deleteBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = req.params.id;
+    console.log(id);
+    try {
+        const bookResult = yield dailyBookModel_1.dailyBook.destroy({
+            where: {
+                daily_book_id: id,
+            },
+            cascade: true,
+        });
+        console.log(bookResult);
+        res.status(200).json(bookResult);
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.deleteBook = deleteBook;
 //# sourceMappingURL=dailyBookController.js.map

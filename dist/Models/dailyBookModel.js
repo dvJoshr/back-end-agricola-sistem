@@ -29,6 +29,7 @@ exports.dailyBook.hasMany(dailyBookDetalleModel_1.dailyBooksDetails, {
 dailyBookDetalleModel_1.dailyBooksDetails.belongsTo(exports.dailyBook, {
     foreignKey: "daily_book_id_fk",
     targetKey: "daily_book_id",
+    onDelete: "CASCADE",
 });
 exports.dailyBook.hasMany(mayorizacionModel_1.mayorizacion, {
     foreignKey: "daily_book_id_fk",

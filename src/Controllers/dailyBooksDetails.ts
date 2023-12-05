@@ -13,7 +13,6 @@ export const getDailyBooksDetails = async (req: Request, res: Response) => {
 
 export const getDailyBookDetailsById = async (req: Request, res: Response) => {
   const id = req.params.id;
-  console.log("Aqui deberia haber un id", id);
   try {
     const response = await dailyBooksDetails.findAll({
       where: {
@@ -36,32 +35,23 @@ export const saveBooksDetails = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
 export const getCountsBooks = async (req: Request, res: Response) => {
   let id_libro = req.params.id;
   try {
     const cuentas = await dailyBooksDetails.findAll({
-      attributes: [
-        [
-          Sequelize.fn("DISTINCT", Sequelize.col("codigo_chartaccount")),
-          "codigo_chartaccount",
-        ],
-        "estado",
-      ],
+      attributes: [[Sequelize.fn("DISTINCT", Sequelize.col("codigo_chartaccount")), "codigo_chartaccount"], "estado"],
       where: {
         daily_book_id_fk: id_libro,
       },
     });
-    console.log(cuentas);
     res.json(cuentas);
   } catch (error) {
     res.json(error);
   }
 };
 
-export const getBooksDetailsByBookAndAccount = async (
-  req: Request,
-  res: Response
-) => {
+export const getBooksDetailsByBookAndAccount = async (req: Request, res: Response) => {
   try {
     let parametros = {
       id: req.params.id,
@@ -106,8 +96,70 @@ export const updateDetails = async (req: Request, res: Response) => {
             { estado: req.params.estado },
           ],
         },
-      }
+      },
     );
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const getBooksDetailsToStates = async (req: Request, res: Response) => {
+  try {
+    let parametros = {
+      id_libro: req.params.libro,
+      codigo_first: req.params.codigo_first,
+      codigo_second: req.params.codigo_second,
+    };
+    const response = await dailyBooksDetails.findAll({
+      where: {
+        [Op.and]: [
+          {
+            daily_book_id_fk: parametros.id_libro,
+          },
+          {
+            [Op.or]: [
+              {
+                codigo_chartaccount: {
+                  [Op.like]: `${parametros.codigo_first}%`,
+                },
+              },
+              {
+                codigo_chartaccount: {
+                  [Op.like]: `${parametros.codigo_second}%`,
+                },
+              },
+            ],
+          },
+        ],
+      },
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const deleteAccountDetail = async (req: Request, res: Response) => {
+  let id = req.params.id;
+  try {
+    const response = await dailyBooksDetails.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const updateDetailsAccount = async (req: Request, res: Response) => {
+  try {
+    let id = req.params.id;
+    const response = await dailyBooksDetails.update(req.body, {
+      where: { id: id },
+    });
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(error);

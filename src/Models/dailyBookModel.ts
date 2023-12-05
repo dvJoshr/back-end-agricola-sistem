@@ -22,7 +22,7 @@ export const dailyBook = sequelize.define(
   },
   {
     timestamps: false,
-  }
+  },
 );
 
 dailyBook.hasMany(dailyBooksDetails, {
@@ -33,6 +33,7 @@ dailyBook.hasMany(dailyBooksDetails, {
 dailyBooksDetails.belongsTo(dailyBook, {
   foreignKey: "daily_book_id_fk",
   targetKey: "daily_book_id",
+  onDelete: "CASCADE",
 });
 
 dailyBook.hasMany(mayorizacion, {

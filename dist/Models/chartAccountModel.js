@@ -15,6 +15,9 @@ exports.account = database_1.sequelize.define("chartaccounts", {
     detalle: {
         type: sequelize_1.DataTypes.STRING,
     },
+    estado: {
+        type: sequelize_1.DataTypes.STRING,
+    },
 }, {
     timestamps: false,
 });
